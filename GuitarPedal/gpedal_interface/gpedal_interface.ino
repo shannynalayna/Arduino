@@ -4,8 +4,11 @@
 
 #include <UTFT.h>
 #include <URTouch.h>
+#include <TFT.h> //include TFT library
 
-
+#define cs   10 //set lcd cs pin to arduino pin 10
+#define dc   9 //set lcd dc pin to arduino pin 9
+#define rst  8 //set lcd reset pin to arduino pin 8
 #define player1 A0
 #define player2 A1
 #define player1Led A3
@@ -33,6 +36,7 @@ int two_playersValue;
 bool two_playersGame;
 int x;
 int y;
+int t = 3000; // TODO: Need to define this var, figure out how long you actually want to delay
 char currentPage;
 char notePage;
 char scalePage;
@@ -62,7 +66,7 @@ UTFT myGLCD(model, 38,39,40,41); // Instantiate lcd screen instance
 
 URTouch myTouch(6, 5, 4, 3, 2); // Instantiate touche screen
 
-UTFT myScreen;
+TFT myScreen = TFT(cs, dc, rst);//declare name of TFT screen
 //--------------------------------------------------------------------------------
 void setup() {
   myGLCD.InitLCD();//initialize lcd screen
@@ -434,7 +438,8 @@ void drawModeScreen() {
 
 //--------------------------------------------------------------------------------
 void findFreq(int frequency) {
-
+  int midX = x / 2; // IDK how this will work in the case that it needs this to be rounded
+  int midY = y / 2;
   for (int i = 0; i < 45 ; i++) {
     if ((((frequency - freqVals[i]) / frequency) * 100) < 3.0) {
       freqCase = caseVal[i];
@@ -738,7 +743,8 @@ void loop() {
         myGLCD.clrScr();//clear screen
         myGLCD.setColor(114, 198, 206); //set color
         myGLCD.fillRect(0, 0, 319, 39); //set screen background
-        drawGameModes();//draw game modes/scales
+        // drawGameModes();//draw game modes/scales
+        // TODO: What do you actually want here ?
       }
     }
   }
@@ -865,7 +871,7 @@ void loop() {
                 scalePage = '1';
                 drawFrame(80, 40, 240, 119);
                 myGLCD.clrScr();
-                drawModeScreen()
+                drawModeScreen();
               }
               if (x <= 240 && x >= 80 && y <= 200 && y >= 121) {
                 //minor scale selected
@@ -909,6 +915,7 @@ void loop() {
                     myTouch.read();
                     x = myTouch.getX();
                     y = myTouch.getY();
+                    /**
                     if (x <= && x >= && y <= && y >= ) {
                       //Natural Minor
                       minorModePage = '1';
@@ -934,6 +941,8 @@ void loop() {
                       minorModePage = '4';
                       drawPlayScreen();
                     }
+                    */
+                    //TODO: Finish the logic here
                     if (x >= 10 && x <= 60 && y >= 10 && y <= 36) { //back button pressed
                       drawFrame(10, 10, 60, 36); //highlight back button
                       scalePage = '0';//set scalePage to homescreen
