@@ -15,6 +15,12 @@ long previousP1LowMicros = 0;
 long previousP1HighMicros = 0;
 unsigned long currentP1LowMicros;
 unsigned long currentP1HighMicros;
+
+long previousP2LowMicros = 0;
+long previousP2HighMicros = 0;
+unsigned long currentP2LowMicros;
+unsigned long currentP2HighMicros;
+
 bool player1Bool;
 bool player2Bool;
 long p1Htime;
@@ -46,6 +52,8 @@ int caseVal[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
                  24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43,
                  44, 45
                 };
+int freqCase;
+int freqVal;
 char selectedSet[] = {currentPage, notePage, scalePage, majorModePage, minorModePage};
 
 byte model = ITDB24;
@@ -54,7 +62,7 @@ UTFT myGLCD(model, 38,39,40,41); // Instantiate lcd screen instance
 
 URTouch myTouch(6, 5, 4, 3, 2); // Instantiate touche screen
 
-
+UTFT myScreen;
 //--------------------------------------------------------------------------------
 void setup() {
   myGLCD.InitLCD();//initialize lcd screen
@@ -426,7 +434,7 @@ void drawModeScreen() {
 
 //--------------------------------------------------------------------------------
 void findFreq(int frequency) {
-  freqCase;
+
   for (int i = 0; i < 45 ; i++) {
     if ((((frequency - freqVals[i]) / frequency) * 100) < 3.0) {
       freqCase = caseVal[i];
@@ -435,6 +443,7 @@ void findFreq(int frequency) {
     }
   }
   switch (freqCase) {
+    //TODO: Figure out what type / what library myScreen belongs to
     case 1:
       //note is Open E-82Hz
       myScreen.background(0, 255, 0);
