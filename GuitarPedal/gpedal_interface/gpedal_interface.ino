@@ -227,7 +227,7 @@ void getJamNotes() {
     }
     player1Freq = 1 / (p1Ltime + p1Htime);
     readPlayer2();//call/run readPlayer2 function
-    
+
     if (player2Bool == HIGH) {
       currentP2HighMicros = micros();
       p2Ltime = currentP2LowMicros - previousP2LowMicros;
