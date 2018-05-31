@@ -56,8 +56,7 @@ int caseVal[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
                  24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43,
                  44, 45
                 };
-int freqCase;
-int freqVal;
+
 char selectedSet[] = {currentPage, notePage, scalePage, majorModePage, minorModePage};
 
 byte model = ITDB24;
@@ -438,6 +437,8 @@ void drawModeScreen() {
 
 //--------------------------------------------------------------------------------
 void findFreq(int frequency) {
+  int freqCase;
+  int freqVal;
   int midX = x / 2; // IDK how this will work in the case that it needs this to be rounded
   int midY = y / 2;
   for (int i = 0; i < 45 ; i++) {
